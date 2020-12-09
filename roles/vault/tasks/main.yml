@@ -1,0 +1,14 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: CentOS 6 Repositories are pointing to vault
+  template:
+    src: CentOS-Base-6.repo.j2
+    dest: /etc/yum.repos.d/CentOS-Base.repo
+    mode: 00400
+    backup: true
+  when:
+  - ansible_distribution_major_version == '6'
+  - ansible_distribution == 'CentOS'
+
+...

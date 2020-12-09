@@ -1,0 +1,21 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: group by CentOS
+  hosts: all
+  tasks:
+  - name: group by CentOS
+    group_by:
+      key: CentOS{{ ansible_distribution_major_version }}_group
+      parents:
+      - CentOS_group
+    when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution == 'CentOS'
+
+- name: Converge
+  hosts: CentOS6_group,!infrastructure_group
+  roles:
+  - role: mafalb.centos.vault
+
+...

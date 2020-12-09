@@ -1,0 +1,26 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+namespace: mafalb
+name: centos
+version: 0.0.1
+readme: README.md
+
+authors: []
+
+description: Ansible collection centos
+
+license:
+- GPL-3.0-or-later
+
+tags:
+- centos
+
+dependencies: {}
+
+repository: https://github.com/mafalb/ansible-collection-centos
+documentation: https://github.com/mafalb/ansible-collection-centos
+homepage: https://github.com/mafalb/ansible-collection-centos
+issues: https://github.com/mafalb/ansible-collection-centos/issues
+
+...

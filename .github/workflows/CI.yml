@@ -1,0 +1,69 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+name: CI
+
+on:
+
+  push:
+    branches:
+    - '**'
+    tags-ignore:
+    - '*'
+
+  schedule:
+    - cron: '40 11 * * 6'
+
+jobs:
+
+  CI:
+
+    runs-on: ubuntu-20.04
+
+    strategy:
+
+      fail-fast: false
+
+      matrix:
+
+        ansible_version:
+        - '2.9'
+        - '2.10'
+
+    env:
+      
+      ANSIBLE_VERSION: ${{ matrix.ansible_version }}
+      CI_CONTAINER_IMAGE: ${{ matrix.distribution }}
+      CI_CONTAINER_TAG: ${{ matrix.version }}
+      PY_COLORS: 1
+      ANSIBLE_FORCE_COLOR: 1
+      
+    defaults:
+      run:
+        working-directory: ansible_collections/mafalb/centos
+
+    steps:
+
+    - name: checkout collection ansible
+      uses: actions/checkout@v2
+      with:
+        path: ansible_collections/mafalb/centos
+
+    - name: install dependencies
+      run: ansible-galaxy collection install -r molecule/requirements.yml
+
+    - name: install molecule
+      run: ansible-playbook -D molecule/install_molecule.yml -e molecule_ansible_version=${{ matrix.ansible_version }} -t all,debug
+
+
+    - name: check ansible version
+      run: |
+        source ~/.virtualenvs/molecule/bin/activate
+        ansible --version | grep "^ansible ${{ matrix.ansible_version }}"
+
+    - name: molecule tests
+      run: |
+        source ~/.virtualenvs/molecule/bin/activate
+        molecule lint
+
+...
