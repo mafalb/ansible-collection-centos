@@ -18,7 +18,7 @@
     loop_var: repo
 
 - name: CentOS Vault is configured
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: CentOS-Vault.repo.j2
     dest: /etc/yum.repos.d/CentOS-Vault.repo
     mode: "0644"
