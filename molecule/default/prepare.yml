@@ -4,6 +4,6 @@
 - name: Set up proxy
   hosts: proxy_group
   roles:
-  - name: mafalb.squid.server
+    - role: mafalb.squid.server
 
 ...

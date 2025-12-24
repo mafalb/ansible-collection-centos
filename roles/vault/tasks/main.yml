@@ -1,14 +1,14 @@
 # vim: set ft=yaml ts=2 expandtab:
 ---
 
-- name: CentOS 6 Repositories are pointing to vault
-  template:
-    src: CentOS-Base-6.repo.j2
-    dest: /etc/yum.repos.d/CentOS-Base.repo
-    mode: 00400
-    backup: true
+- name: Include OS specific variables
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_tasks:
+    file: "{{ item }}"
   when:
-  - ansible_distribution_major_version == '6'
-  - ansible_distribution == 'CentOS'
-
+    - ansible_distribution == 'CentOS'
+    - ansible_distribution_major_version in ['6', '7']
 ...

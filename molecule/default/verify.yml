@@ -5,7 +5,7 @@
   hosts: all,!infrastructure_group
   tasks:
   - name: Example assertion
-    assert:
+    ansible.builtin.assert:
       that: false
 
 ...

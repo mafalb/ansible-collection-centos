@@ -31,13 +31,13 @@ jobs:
         - '2.10'
 
     env:
-      
+
       ANSIBLE_VERSION: ${{ matrix.ansible_version }}
       CI_CONTAINER_IMAGE: ${{ matrix.distribution }}
       CI_CONTAINER_TAG: ${{ matrix.version }}
       PY_COLORS: 1
       ANSIBLE_FORCE_COLOR: 1
-      
+
     defaults:
       run:
         working-directory: ansible_collections/mafalb/centos

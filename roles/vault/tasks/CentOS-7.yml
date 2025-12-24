@@ -1,0 +1,26 @@
+---
+- name: CentOS 7 is EOL
+  ansible.builtin.copy:
+    content: |
+      # CentOS 7 is EOL. Don't use it.
+    dest: /etc/yum.repos.d/CentOS-{{ repo }}.repo
+    mode: "0644"
+    backup: true
+  loop:
+    - Base
+    - CR
+    - Debuginfo
+    - Media
+    - Sources
+    - fasttrack
+    - x86_64-kernel
+  loop_control:
+    loop_var: repo
+
+- name: CentOS Vault is configured
+  ansible.builtin.copy:
+    src: CentOS-Vault.repo.j2
+    dest: /etc/yum.repos.d/CentOS-Vault.repo
+    mode: "0644"
+    backup: true
+...

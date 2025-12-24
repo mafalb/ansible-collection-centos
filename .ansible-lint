@@ -1,0 +1,5 @@
+exclude_paths:
+  - tests/output
+  - .ansible
+verbosity: 1
+offline: true
